@@ -8,8 +8,11 @@ class Chat {
         this.pausescroll = false;
         this.emoticons = [];
         this.emotesets = [];
+        this.chatters = {};
+        this.messageid = 0;
         this.channel;
         this.ws;
+        this.lastmessagebeforetab = "";
 
         this.localuser = {
             mod: [],
@@ -220,26 +223,29 @@ class Chat {
                 {
                     var message = data.params[1];
                     var user = typeof data.tags["display-name"] == "string" ? data.tags["display-name"].replace('\\s', ' ').replace('\\:', ';').replace('\\\\', '\\').replace('\\r', '').replace('\\n', '\u23CE') : data.prefix.split('!')[0];
+                    var displayName = user;
                     var rawuser = data.prefix.split('!')[0];
                     var namecolor;
                     var badges = [];
+                    this.messageid++;
+                    this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid);
 
                     if (user == "jtv")
                     {
                         if (message.match(/^(?:USERCOLOR|SPECIALUSER|EMOTESET|CLEARCHAT|HOSTTARGET)/))
                             return;
                         else if (message.indexOf("now in slow") > -1)
-                            $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#73732E" }, 200);
+                            $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#0F0" }, 200);
                         else if (message.indexOf("no longer in slow") > -1)
                             $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
                         else if (message.indexOf("now in subscribers") > -1)
-                            $("#submode").text("ON").animate({ "background-color": "#2E7332" }, 200);
+                            $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
                         else if (message.indexOf("no longer in subscribers") > -1)
-                            $("#submode").text("OFF").animate({ "background-color": "#732E2E" }, 200);
+                            $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
                         else if (message.indexOf("now in r9k") > -1)
-                            $("#r9k").text("ON").animate({ "background-color": "#2E7332" }, 200);
+                            $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
                         else if (message.indexOf("no longer in r9k") > -1)
-                            $("#r9k").text("OFF").animate({ "background-color": "#732E2E" }, 200);
+                            $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
                     }
 
                     if (this.channel == rawuser)
@@ -320,18 +326,46 @@ class Chat {
                         {
                             if (normalText[i].length > 0)
                             {
+                                var links = {};
+                                var linkid = 0xE000;
                                 var text = $('<div/>').text(normalText[i]).html()
-                                    .replace(/((?:[Hh][Tt]{2}[Pp][Ss]?:\/\/)?(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,}(?:\/[\w\d._~!$&'\(\)*+,;=:@\/#?%-]+)?)/g, '<a href="$1" target="_blank">$1</a>')
-                                    .replace(this.localuser.username, '<span class="highlight">' + this.localuser.username + '</span>');
+                                    .replace(/(?:[Hh][Tt]{2}[Pp][Ss]?:\/\/)?(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,}(?:\/[\w\d._~!$&'\(\)*+,;=:@\/#?%-]+)?/g, 
+                                        function(m)
+                                        {
+                                            links[++linkid] = '<a href="'+m+'" target="_blank">'+m+'</a>';
+                                            return String.fromCharCode(linkid);
+                                        });
+                                var oldtext = text;
+                                message = message.replace(new RegExp(this.localuser.username,"i"), function(m){return '<span class="highlight">' + m + '</span>'});
+                                if(oldtext != text)
+                                {
+                                    // found a highlight
+                                    this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid+200);
+                                }
+                                text = text.replace(/[\uE000-\uF800]/,function(x){return links[x.charCodeAt(0)];});
                                 message = message.replace(normalText[i], text);
                             }
                         }
                     }
                     else
                     {
+                        var links = {};
+                        var linkid = 0xE000;
                         message = $('<div/>').text(message).html()
-                                .replace(/((?:[Hh][Tt]{2}[Pp][Ss]?:\/\/)?(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,}(?:\/[\w\d._~!$&'\(\)*+,;=:@\/#?%-]+)?)/g, '<a href="$1" target="_blank">$1</a>')
-                                .replace(this.localuser.username, '<span class="highlight">' + this.localuser.username + '</span>');
+                                .replace(/((?:[Hh][Tt]{2}[Pp][Ss]?:\/\/)?(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,}(?:\/[\w\d._~!$&'\(\)*+,;=:@\/#?%-]+)?)/g, 
+                                    function(m)
+                                    {
+                                        links[++linkid] = '<a href="'+m+'" target="_blank">'+m+'</a>';
+                                        return String.fromCharCode(linkid);
+                                    });
+                        var oldmessage = message;
+                        message = message.replace(new RegExp(this.localuser.username,"i"), function(m){return '<span class="highlight">' + m + '</span>'});
+                        if(oldmessage != message)
+                        {
+                            // found a highlight
+                            this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid+200);
+                        }
+                        message = message.replace(/[\uE000-\uF800]/,function(x){return links[x.charCodeAt(0)];});
                     }
                     if (isAction)
                     {
@@ -461,6 +495,16 @@ class Chat {
         {
             self.messagingInputKeyDown(evt, this);
         });
+        $("#messaging-input").tabcomplete({collection: function(w)
+        {
+            var coll = [];
+            for(var u in self.chatters)
+            {
+                if(u!="jtv" && u.toLowerCase().replace(" ","").indexOf(w.toLowerCase())==0)coll.push(u);
+            }
+            coll.sort(function(a,b){return self.chatters[b]-self.chatters[a];});
+            return coll;
+        }});
     }
 
     onModIconClicked(self)
@@ -470,6 +514,10 @@ class Chat {
         if ($(self).hasClass("t3600"))
         {
             msg = "/timeout " + user + " 3600";
+	}
+	else if ($(self).hasClass("t1"))
+        {
+            msg = "/timeout " + user + " 1";
         }
         else if ($(self).hasClass("tperm"))
         {
@@ -524,7 +572,7 @@ class Chat {
         }
         if (this.isLocalUserMod() && !modFound)
         {
-            modicons = '<span class="modicon t600">10m</span><span class="modicon t3600">1hr</span><span class="modicon tperm">Ban</span> ';
+            modicons = '<span class="modicon t1"><img src="https://dl.dropboxusercontent.com/u/13337387/assets/purge.png" alt="purge"/></span><span class="modicon t600"><img src="https://dl.dropboxusercontent.com/u/13337387/assets/timeout.png" alt="timeout" /></span><span class="modicon t3600">h</span><span class="modicon tperm"><img src="https://dl.dropboxusercontent.com/u/13337387/assets/ban.png" alt="ban" /></span> ';
         }
         var scrollCheck = element[0].scrollHeight - element.scrollTop() <= element.outerHeight() + 100;
         if (typeof data.user === "undefined" || data.user.length == 0)
@@ -553,13 +601,6 @@ class Chat {
 $(document).ready(function ()
 {
     var chat = {pausescroll: false};
-    function resized()
-    {
-        $('#messages').height(($(window).height() - 150) + 'px');
-    }
-
-    $(window).resize(resized);
-    resized();
 
     $(document).keydown(
         function (evt)
@@ -607,7 +648,6 @@ $(document).ready(function ()
         }
     });
 });
-
 
 function getRandomInt(min, max)
 {

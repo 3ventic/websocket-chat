@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>unbenannt</title>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<script src="jquery.caret.js"></script>
+	<script src="../../tabcomplete/tabcomplete.min.js"></script>
+</head>
+
+<body>
+	<textarea style="height: 200px; width: 300px;"></textarea>
+	<div style="height: 200px; width: 300px; border: 2px solid;" contenteditable="true"></div>
+	<script>
+	$("textarea").tabcomplete({collection: ["some user",
+											"some user1",
+											"someuser2",
+											"someuser3",
+											"some user4",
+											"some user5",
+											"another user",
+											"another user24",
+											"anotheruserkappa",
+											"anotheruserbutts",
+											"anotheruserpoop"]});
+	$("div").tabcomplete({collection: ["some user",
+											"some user1",
+											"someuser2",
+											"someuser3",
+											"some user4",
+											"some user5",
+											"another user",
+											"another user24",
+											"anotheruserkappa",
+											"anotheruserbutts",
+											"anotheruserpoop"]});
+	</script>
+</body>
+
+</html>
