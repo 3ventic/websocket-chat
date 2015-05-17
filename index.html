@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Chat for Twitch</title>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+    <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="jquery.caret.js"></script>
+    <script src="tabcomplete.js"></script>
+    <script src="app.js"></script>
+    <style>
+		*
+		{
+			margin: 0;
+			padding: 0;
+		}
+		
+		html, body
+		{
+			height: 100%;
+		}
+		
+        body {
+            font-family: "Trebuchet MS", Helvetica, sans-serif; /* Helvetica, Verdana, Arial, sans-serif; */
+            font-size: 14px;
+            background-color: #FFF;
+            color: #000;
+        }
+
+        #channel-select {
+            display: none;
+        }
+
+        #everything {
+            display: none;
+			height: 100%;
+        }
+
+        #messages {
+            word-wrap: normal;
+            overflow-x: hidden;
+            overflow-y: scroll;
+			height: calc(100% - 60px);
+			padding-right: 5px;
+        }
+
+            #messages .line {
+                line-height: 24px;
+            }
+
+        span.user {
+            font-weight: bold;
+        }
+
+        .system {
+            font-size: smaller;
+        }
+
+        span.highlight {
+			padding: 0 1px;
+            display: inline-block;
+            color: #FFF;
+            background-color: #000;
+        }
+
+        span.badge {
+            display: inline-block;
+            height: 18px;
+            width: 18px;
+            vertical-align: middle;
+            margin: 1px 3px 1px 0;
+        }
+
+        span.broadcaster {
+            background: #e71818 url(http://cbenni.com/static/broadcaster.png);
+            background-size: 100%;
+        }
+
+        span.staff {
+            background: #200f33 url(http://cbenni.com/static/staff.png);
+            background-size: 100%;
+        }
+
+        span.admin {
+            background: #faaf19 url(http://cbenni.com/static/globalmod.png);
+            background-size: 100%;
+        }
+
+        span.global_mod {
+            background: #0c6f20 url(https://chat-badges.s3.amazonaws.com/globalmod.svg);
+            background-size: 100%;
+        }
+
+        span.mod {
+            background: #34ae0a url(http://cbenni.com/static/mod.png);
+            background-size: 100%;
+        }
+
+        span.turbo {
+            background: #6441a5 url(http://cbenni.com/static/turbo.png);
+            background-size: 100%;
+        }
+
+        span.modicon {
+            display: inline-block;
+            cursor: pointer;
+            background: #FFF;
+            font-weight: bold;
+			position: relative;
+			top: 4px;
+        }
+        span.modicon.t1 {
+            margin-left: 3px;
+        }
+
+        .emote {
+            background-position: center center;
+            background-repeat: no-repeat;
+            margin: -4px 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #emote-label {
+            display: none;
+            background: #000;
+            color: #fff;
+            opacity: 0.7;
+            padding: 5px;
+            position: absolute;
+            width: auto;
+            z-index: 1000;
+        }
+
+        #info {
+            height: 30px;
+        }
+
+            #info span {
+                display: inline-block;
+                width: 80px;
+            }
+
+        #messaging {
+        }
+
+        #messaging-input {
+            height: 30px;
+            width: 100%;
+            background-color: #FFF;
+            color: #000;
+			position: absolute;
+			bottom: 0px;
+			box-sizing: border-box;
+        }
+
+        a {
+            color: #000;
+        }
+
+            a:visited {
+                color: #000;
+            }
+    </style>
+    <style id="subscriber-icon"></style>
+</head>
+<body>
+    <img src="//ttv-api.s3.amazonaws.com/assets/connect_dark.png" class="twitch-connect" href="#" />
+    <div id="channel-select">
+        <input id="channel-select-input" type="text" />
+        <button id="channel-select-button">Go</button>
+    </div>
+    <div id="everything">
+        <div id="info">
+            <strong>Slow:</strong> <span id="slow">Unknown</span> | <strong>Submode:</strong> <span id="submode">Unknown</span> | <strong>R9k:</strong> <span id="r9k">Unknown</span>
+        </div>
+        <div id="messages">
+
+        </div>
+        <div id="messaging">
+            <textarea id="messaging-input"></textarea>
+        </div>
+    </div>
+    <div id="emote-label"></div>
+</body>
+</html>
