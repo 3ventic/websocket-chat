@@ -1,138 +1,149 @@
-        body {
-            font-family: font-family: "Trebuchet MS", Helvetica, sans-serif; /* Helvetica, Verdana, Arial, sans-serif; */
-            font-size: 16px;
-            background-color: #1B1E2E;
-            color: #A4A8BF;
-            padding: 5px;
-            margin: 0;
-        }
+*
+{
+    margin: 0;
+    padding: 0;
+}
 
-        #channel-select {
-            display: none;
-        }
+html, body
+{
+    height: 100%;
+}
 
-        #everything {
-            display: none;
-        }
+body {
+    font-family: font-family: "Trebuchet MS", Helvetica, sans-serif; /* Helvetica, Verdana, Arial, sans-serif; */
+    font-size: 16px;
+    background-color: #1B1E2E;
+    color: #A4A8BF;
+}
 
-        #messages {
-            word-wrap: normal;
-            overflow-x: hidden;
-            overflow-y: scroll;
-        }
+#channel-select {
+    display: none;
+}
 
-            #messages .line {
-                line-height: 24px;
-            }
+#everything {
+    display: none;
+    height: 100%;
+}
 
-        span.user {
-            font-weight: bold;
-        }
+#messages {
+    word-wrap: normal;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: calc(100% - 60px);
+    padding-right: 5px;
+}
 
-        .system {
-            font-size: smaller;
-        }
+#messages .line {
+    line-height: 24px;
+}
 
-        span.highlight {
-            padding: 2px 5px;
-            display: inline-block;
-            color: #1B1E2E;
-            background-color: #FFF;
-        }
+span.user {
+    font-weight: bold;
+}
 
-        span.badge {
-            display: inline-block;
-            height: 18px;
-            width: 18px;
-            vertical-align: middle;
-            margin: 1px 3px 1px 0;
-        }
+.system {
+    font-size: smaller;
+}
 
-        span.broadcaster {
-            background: #e71818 url(https://chat-badges.s3.amazonaws.com/broadcaster.svg);
-            background-size: 100%;
-        }
+span.highlight {
+    padding: 0 1px;
+    display: inline-block;
+    color: #1B1E2E;
+    background-color: #FFF;
+}
 
-        span.staff {
-            background: #200f33 url(https://chat-badges.s3.amazonaws.com/staff.svg);
-            background-size: 100%;
-        }
+span.badge {
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    vertical-align: middle;
+    margin: 1px 3px 1px 0;
+}
 
-        span.admin {
-            background: #faaf19 url(https://chat-badges.s3.amazonaws.com/admin.svg);
-            background-size: 100%;
-        }
+span.broadcaster {
+    background: #e71818 url(https://chat-badges.s3.amazonaws.com/broadcaster.svg);
+    background-size: 100%;
+}
 
-        span.global_mod {
-            background: #0c6f20 url(https://chat-badges.s3.amazonaws.com/globalmod.svg);
-            background-size: 100%;
-        }
+span.staff {
+    background: #200f33 url(https://chat-badges.s3.amazonaws.com/staff.svg);
+    background-size: 100%;
+}
 
-        span.mod {
-            background: #34ae0a url(https://chat-badges.s3.amazonaws.com/mod.svg);
-            background-size: 100%;
-        }
+span.admin {
+    background: #faaf19 url(https://chat-badges.s3.amazonaws.com/admin.svg);
+    background-size: 100%;
+}
 
-        span.turbo {
-            background: #6441a5 url(https://chat-badges.s3.amazonaws.com/turbo.svg);
-            background-size: 100%;
-        }
+span.global_mod {
+    background: #0c6f20 url(https://chat-badges.s3.amazonaws.com/globalmod.svg);
+    background-size: 100%;
+}
 
-        span.modicon {
-            display: inline-block;
-            height: 16px;
-            margin: 2px 6px 2px 0;
-            cursor: pointer;
-            background: #000;
-            border-radius: 5px;
-            padding: 5px;
-            font-weight: bold;
-        }
+span.mod {
+    background: #34ae0a url(https://chat-badges.s3.amazonaws.com/mod.svg);
+    background-size: 100%;
+}
 
-        .emote {
-            background-position: center center;
-            background-repeat: no-repeat;
-            margin: -4px 0;
-            display: inline-block;
-            vertical-align: middle;
-        }
+span.turbo {
+    background: #6441a5 url(https://chat-badges.s3.amazonaws.com/turbo.svg);
+    background-size: 100%;
+}
 
-        #emote-label {
-            display: none;
-            background: #000;
-            color: #fff;
-            opacity: 0.7;
-            padding: 5px;
-            position: absolute;
-            width: auto;
-            z-index: 1000;
-        }
+span.modicon {
+    display: inline-block;
+    height: 16px;
+    margin: 2px 6px 2px 0;
+    cursor: pointer;
+    background: #000;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+}
 
-        #info {
-            height: 30px;
-        }
+.emote {
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: -4px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
 
-            #info span {
-                display: inline-block;
-                width: 80px;
-            }
+#emote-label {
+    display: none;
+    background: #000;
+    color: #fff;
+    opacity: 0.7;
+    padding: 5px;
+    position: absolute;
+    width: auto;
+    z-index: 1000;
+}
 
-        #messaging {
-            height: 90px;
-        }
+#info {
+    height: 30px;
+}
 
-        #messaging-input {
-            height: 70px;
-            resize: horizontal;
-            width: 50%;
-            background-color: #212537;
-            color: #A4A8BF;
-        }
+    #info span {
+        display: inline-block;
+        width: 80px;
+    }
 
-        a {
-            color: #FFF;
-        }
+#messaging {
+}
 
-        a:visited {
-            color: #A4A8BF;
-        }
+#messaging-input {
+    height: 30px;
+    resize: horizontal;
+    width: 50%;
+    background-color: #212537;
+    color: #A4A8BF;
+}
+
+a {
+    color: #FFF;
+}
+
+a:visited {
+    color: #A4A8BF;
+}
