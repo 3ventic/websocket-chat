@@ -29,7 +29,7 @@ body {
     word-wrap: normal;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: calc(100% - 65px);
+    height: calc(100% - 70px);
     padding-right: 5px;
 }
 
