@@ -29,7 +29,7 @@ body {
     word-wrap: normal;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: calc(100% - 60px);
+    height: calc(100% - 65px);
     padding-right: 5px;
 }
 
@@ -136,6 +136,8 @@ span.modicon {
     height: 30px;
     resize: horizontal;
     width: 50%;
+    position: absolute;
+    bottom: 0px;
     background-color: #212537;
     color: #A4A8BF;
 }
