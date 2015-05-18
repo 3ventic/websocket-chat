@@ -1,0 +1,152 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html, body
+{
+    height: 100%;
+}
+
+body {
+    font-family: "Trebuchet MS", Helvetica, sans-serif; /* Helvetica, Verdana, Arial, sans-serif; */
+    font-size: 14px;
+    background-color: #FFF;
+    color: #000;
+}
+
+#channel-select {
+    display: none;
+}
+
+#everything {
+    display: none;
+    height: 100%;
+}
+
+#messages {
+    word-wrap: normal;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: calc(100% - 60px);
+    padding-right: 5px;
+}
+
+#messages .line {
+    line-height: 24px;
+}
+
+span.user {
+    font-weight: bold;
+}
+
+.system {
+    font-size: smaller;
+}
+
+span.highlight {
+    padding: 0 1px;
+    display: inline-block;
+    color: #FFF;
+    background-color: #000;
+}
+
+span.badge {
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    vertical-align: middle;
+    margin: 1px 3px 1px 0;
+}
+
+span.broadcaster {
+    background: #e71818 url(http://cbenni.com/static/broadcaster.png);
+    background-size: 100%;
+}
+
+span.staff {
+    background: #200f33 url(http://cbenni.com/static/staff.png);
+    background-size: 100%;
+}
+
+span.admin {
+    background: #faaf19 url(http://cbenni.com/static/globalmod.png);
+    background-size: 100%;
+}
+
+span.global_mod {
+    background: #0c6f20 url(https://chat-badges.s3.amazonaws.com/globalmod.svg);
+    background-size: 100%;
+}
+
+span.mod {
+    background: #34ae0a url(http://cbenni.com/static/mod.png);
+    background-size: 100%;
+}
+
+span.turbo {
+    background: #6441a5 url(http://cbenni.com/static/turbo.png);
+    background-size: 100%;
+}
+
+span.modicon {
+    display: inline-block;
+    cursor: pointer;
+    background: #FFF;
+    font-weight: bold;
+    position: relative;
+    top: 4px;
+}
+span.modicon.t1 {
+    margin-left: 3px;
+}
+
+.emote {
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: -4px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#emote-label {
+    display: none;
+    background: #000;
+    color: #fff;
+    opacity: 0.7;
+    padding: 5px;
+    position: absolute;
+    width: auto;
+    z-index: 1000;
+}
+
+#info {
+    height: 30px;
+}
+
+    #info span {
+        display: inline-block;
+        width: 80px;
+    }
+
+#messaging {
+}
+
+#messaging-input {
+    height: 30px;
+    width: 100%;
+    background-color: #FFF;
+    color: #000;
+    position: absolute;
+    bottom: 0px;
+    box-sizing: border-box;
+}
+
+a {
+    color: #000;
+}
+
+a:visited {
+    color: #000;
+}
