@@ -436,7 +436,7 @@ class Chat {
                 {
                     for (var i = 0; i < data.emoticon_sets[emoteset].length; i++)
                     {
-                        var re = '(?:\s|^)(' + data.emoticon_sets[emoteset][i].code + ')(?:\s|$)';
+                        var re = '(?:\\s|^)(' + data.emoticon_sets[emoteset][i].code + ')(?:\\s|$)';
                         var idx = regexes.indexOf(re);
                         if (idx === -1)
                         {
