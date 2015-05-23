@@ -342,7 +342,7 @@ class Chat {
                                     // found a highlight
                                     this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid+200);
                                 }
-                                text = text.replace(/[\uE000-\uF800]/,function(x){return links[x.charCodeAt(0)];});
+                                text = text.replace(/[\uE000-\uF800]/g,function(x){return links[x.charCodeAt(0)];});
                                 message = message.replace(normalText[i], text);
                             }
                         }
@@ -365,7 +365,7 @@ class Chat {
                             // found a highlight
                             this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid+200);
                         }
-                        message = message.replace(/[\uE000-\uF800]/,function(x){return links[x.charCodeAt(0)];});
+                        message = message.replace(/[\uE000-\uF800]/g,function(x){return links[x.charCodeAt(0)];});
                     }
                     if (isAction)
                     {
