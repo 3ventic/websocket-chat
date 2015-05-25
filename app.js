@@ -436,7 +436,7 @@ class Chat {
                 {
                     for (var i = 0; i < data.emoticon_sets[emoteset].length; i++)
                     {
-                        var re = '(?:\\s|^)(' + data.emoticon_sets[emoteset][i].code + ')(?:\\s|$)';
+                        var re = '(\\s|^)(' + data.emoticon_sets[emoteset][i].code + ')(?=\\s|$)';
                         var idx = regexes.indexOf(re);
                         if (idx === -1)
                         {
@@ -540,7 +540,7 @@ class Chat {
             {
                 for (var i = 0; i < this.emoticons.length; i++)
                 {
-                    message = message.replace(this.emoticons[i].code, '<img class="emote" src="https://static-cdn.jtvnw.net/emoticons/v1/' + this.emoticons[i].id + '/1.0" alt="$1" />');
+                    message = message.replace(this.emoticons[i].code, '$1<img class="emote" src="https://static-cdn.jtvnw.net/emoticons/v1/' + this.emoticons[i].id + '/1.0" alt="$2" />');
                 }
             }
 
