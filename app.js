@@ -219,6 +219,25 @@ class Chat {
                 this.localuser.namecolor = hex;
                 this.localuser.user = '<span class="user" style="color:' + hex + '">' + this.localuser.username + '</span>';
                 break;
+            case "NOTICE":
+                {
+                    var message = data.params[1];
+                    if (message.indexOf("now in slow") > -1)
+                        $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#0F0" }, 200);
+                    else if (message.indexOf("no longer in slow") > -1)
+                        $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
+                    else if (message.indexOf("now in subscribers") > -1)
+                        $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
+                    else if (message.indexOf("no longer in subscribers") > -1)
+                        $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
+                    else if (message.indexOf("now in r9k") > -1)
+                        $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
+                    else if (message.indexOf("no longer in r9k") > -1)
+                        $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
+                    
+                    this.sendToFeed({ badges: [], user: "", message: message, rawuser: "" });
+                }
+                break;
             case "PRIVMSG":
                 {
                     var message = data.params[1];
@@ -229,24 +248,6 @@ class Chat {
                     var badges = [];
                     this.messageid++;
                     this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid);
-
-                    if (user == "jtv")
-                    {
-                        if (message.match(/^(?:USERCOLOR|SPECIALUSER|EMOTESET|CLEARCHAT|HOSTTARGET)/))
-                            return;
-                        else if (message.indexOf("now in slow") > -1)
-                            $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#0F0" }, 200);
-                        else if (message.indexOf("no longer in slow") > -1)
-                            $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
-                        else if (message.indexOf("now in subscribers") > -1)
-                            $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
-                        else if (message.indexOf("no longer in subscribers") > -1)
-                            $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
-                        else if (message.indexOf("now in r9k") > -1)
-                            $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
-                        else if (message.indexOf("no longer in r9k") > -1)
-                            $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
-                    }
 
                     if (this.channel == rawuser)
                     {
@@ -562,7 +563,7 @@ class Chat {
         }
         if (this.isLocalUserMod() && !modFound)
         {
-            modicons = '<span class="modicon t1"><img src="https://dl.dropboxusercontent.com/u/13337387/assets/purge.png" alt="purge"/></span><span class="modicon t600"><img src="https://dl.dropboxusercontent.com/u/13337387/assets/timeout.png" alt="timeout" /></span><span class="modicon t3600">h</span><span class="modicon tperm"><img src="https://dl.dropboxusercontent.com/u/13337387/assets/ban.png" alt="ban" /></span> ';
+            modicons = '<span class="modicon t1">P</span><span class="modicon t600">T</span><span class="modicon t3600">H</span><span class="modicon tperm">B</span> ';
         }
         var scrollCheck = element[0].scrollHeight - element.scrollTop() <= element.outerHeight() + 100;
         if (typeof data.user === "undefined" || data.user.length == 0)
