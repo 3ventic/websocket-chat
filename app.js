@@ -33,6 +33,10 @@ class Chat {
         {
             self.onChannelSelectButtonClicked();
         });
+        if ("channel" in QueryString)
+        {
+            document.getElementById("channel-select-input").value = QueryString["channel"].toLowerCase();
+        }
     }
 
     get channel()
@@ -75,7 +79,6 @@ class Chat {
         $("#channel-select").hide();
         $("#everything").show();
         this.sendToFeed({ badges: [], message: "Connecting..." });
-        this.sendToFeed({ badges: [], message: "Do NOT share the access_token in the page URL!" });
         window.history.pushState(null, null, "chat/");
 
         var self = this;
