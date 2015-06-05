@@ -156,7 +156,7 @@ class Chat {
         {
             case "RELAYAUTH":
                 this.ws.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
-                this.ws.send('PASS ' + Twitch.getToken());
+                this.ws.send('PASS oauth:' + Twitch.getToken());
                 this.ws.send('NICK ' + this.localuser.username);
                 this.ws.send('JOIN #' + this.channel);
                 break;
