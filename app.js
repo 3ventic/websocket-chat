@@ -450,6 +450,15 @@ class Chat {
                 {
                     for (var i = 0; i < data.emoticon_sets[emoteset].length; i++)
                     {
+                        // we reverse-regex the emote codes
+                        var prettycode = data.emoticon_sets[emoteset][i].code 
+                                         .replace(/\\(\W)/g,function(a,b){return b;}) // unescape
+                                         .replace(/\(([^\)]*)\)/g,function(a,b){return b.split("|")[0];}) // resolve alternatives
+                                         .replace(/\[([^\]]*)\]/g,function(a,b){return b[0];}) // resolve character sets
+                                         .replace(/[^\\]\?/,"") // remove optional characters
+                                         .replace("&lt;","<") // unescape html
+                                         .replace("&gt;",">")); // see above
+                        this.chatters[prettycode] = 0;
                         var re = '(\\s|^)(' + data.emoticon_sets[emoteset][i].code + ')(?=\\s|$)';
                         var idx = regexes.indexOf(re);
                         if (idx === -1)
