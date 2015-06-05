@@ -144,10 +144,6 @@ class Chat {
         // For relay
         this.ws.send('CHANNEL ' + this.channel);
         $('#title').prepend(this.channel + ' ');
-
-        this.ws.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
-        this.ws.send('PASS ' + Twitch.getToken());
-        this.ws.send('JOIN ' + this.channel);
     }
 
     onWsMessage(event)
@@ -158,6 +154,11 @@ class Chat {
 
         switch (data.command)
         {
+            case "RELAYAUTH":
+                this.ws.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
+                this.ws.send('PASS ' + Twitch.getToken());
+                this.ws.send('JOIN ' + this.channel);
+                break;
             case "USERSTATE":
                 var badges = [];
                 var modFound = false;
