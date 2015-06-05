@@ -457,7 +457,7 @@ class Chat {
                                          .replace(/\[([^\]]*)\]/g,function(a,b){return b[0];}) // resolve character sets
                                          .replace(/[^\\]\?/,"") // remove optional characters
                                          .replace("&lt;","<") // unescape html
-                                         .replace("&gt;",">")); // see above
+                                         .replace("&gt;",">"); // see above
                         this.chatters[prettycode] = 0;
                         var re = '(\\s|^)(' + data.emoticon_sets[emoteset][i].code + ')(?=\\s|$)';
                         var idx = regexes.indexOf(re);
