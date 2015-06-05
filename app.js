@@ -150,7 +150,7 @@ class Chat {
     {
         var data = parseMessage(event.data);
 
-        console.log(data);
+        console.log("WS Message", data);
 
         switch (data.command)
         {
