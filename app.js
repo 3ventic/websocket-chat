@@ -33,9 +33,11 @@ class Chat {
         {
             self.onChannelSelectButtonClicked();
         });
+        // Check if ?channel= is set
         if ("channel" in QueryString)
         {
             document.getElementById("channel-select-input").value = QueryString["channel"].toLowerCase();
+            this.loadChat();
         }
     }
 
@@ -144,7 +146,7 @@ class Chat {
     {
         this.sendToFeed({ badges: [], message: "Connected!" });
 
-        // For relay
+        // For relay - TODO: remove after Twitch supports SSL
         this.ws.send('CHANNEL ' + this.channel);
         $('#title').prepend(this.channel + ' ');
     }
@@ -157,6 +159,7 @@ class Chat {
 
         switch (data.command)
         {
+            // TODO: move up to WsOpen when Twitch supports SSL
             case "RELAYAUTH":
                 this.ws.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
                 this.ws.send('PASS oauth:' + Twitch.getToken());
