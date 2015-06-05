@@ -139,24 +139,20 @@ class Chat {
 
     onWsOpen(event, data)
     {
-        console.log(this);
         this.sendToFeed({ badges: [], message: "Connected!" });
-        this.ws.send(JSON.stringify({
-            user: data.token.user_name,
-            token: "oauth:" + Twitch.getToken(),
-            channel: this.channel
-        }));
+
+        // For relay
+        this.ws.send('CHANNEL ' + this.channel);
+        $('#title').prepend(this.channel + ' ');
+
+        this.ws.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
+        this.ws.send('PASS ' + Twitch.getToken());
+        this.ws.send('JOIN ' + this.channel);
     }
 
     onWsMessage(event)
     {
-        var data = JSON.parse(event.data);
-
-        if (typeof data.systemMsg !== "undefined")
-        {
-            sendToFeed({ badges: [], message: data.systemMsg });
-            return;
-        }
+        var data = parseMessage(event.data);
 
         console.log(data);
 
@@ -222,18 +218,27 @@ class Chat {
             case "NOTICE":
                 {
                     var message = data.params[1];
-                    if (message.indexOf("now in slow") > -1)
-                        $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#0F0" }, 200);
-                    else if (message.indexOf("no longer in slow") > -1)
-                        $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
-                    else if (message.indexOf("now in subscribers") > -1)
-                        $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
-                    else if (message.indexOf("no longer in subscribers") > -1)
-                        $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
-                    else if (message.indexOf("now in r9k") > -1)
-                        $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
-                    else if (message.indexOf("no longer in r9k") > -1)
-                        $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
+                    switch (data.tags['msg-id'])
+                    {
+                        case "subs_on":
+                            $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
+                            break;
+                        case "subs_off":
+                            $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
+                            break;
+                        case "r9k_on":
+                            $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
+                            break;
+                        case "r9k_off":
+                            $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
+                            break;
+                        case "slow_on":
+                            $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#0F0" }, 200);
+                            break;
+                        case "slow_off":
+                            $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
+                            break;
+                    }
                     
                     this.sendToFeed({ badges: [], user: "", message: message, rawuser: "" });
                 }
