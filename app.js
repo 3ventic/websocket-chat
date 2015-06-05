@@ -521,7 +521,7 @@ class Chat {
         {
             msg = "/ban " + user;
         }
-        this.ws.send(JSON.stringify({ channel: this.channel, message: msg }));
+        this.ws.send('PRIVMSG #' + this.channel + ' :' + msg);
     }
 
     messagingInputKeyDown(evt, self)
@@ -531,7 +531,7 @@ class Chat {
         {
             evt.preventDefault();
             var message = $(self).val();
-            this.ws.send(JSON.stringify({ channel: this.channel, message: message }));
+            this.ws.send('PRIVMSG #' + this.channel + ' :' + message);
 
             if (message.startsWith("/") || message.startsWith("."))
             {
