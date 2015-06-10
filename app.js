@@ -166,6 +166,9 @@ class Chat {
                 this.ws.send('NICK ' + this.localuser.username);
                 if (!("anonymous" in QueryString)) this.ws.send('JOIN #' + this.channel);
                 break;
+            case "PING":
+                this.ws.send('PONG ' + this.localuser.username + '.tmi.twitch.tv');
+                break;
             case "GLOBALUSERSTATE":
             case "USERSTATE":
                 var badges = [];
