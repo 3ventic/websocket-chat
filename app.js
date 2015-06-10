@@ -147,7 +147,7 @@ class Chat {
         this.sendToFeed({ badges: [], message: "Connected!" });
 
         // For relay - TODO: remove after Twitch supports SSL
-        this.ws.send('CHANNEL ' + this.channel);
+        this.ws.send('CHANNEL ' + ("anonymous" in QueryString ? "!" : "") + this.channel);
         $('#title').prepend(this.channel + ' ');
     }
 
@@ -166,6 +166,7 @@ class Chat {
                 this.ws.send('NICK ' + this.localuser.username);
                 this.ws.send('JOIN #' + this.channel);
                 break;
+            case "GLOBALUSERSTATE":
             case "USERSTATE":
                 var badges = [];
                 var modFound = false;
