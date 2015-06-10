@@ -653,6 +653,7 @@ $(document).ready(function ()
         }
         else
         {
+            window.history.pushState(null, null, ".");
             Twitch.events.addListener("auth.login", function () {
                 chat = new Chat();
             });
