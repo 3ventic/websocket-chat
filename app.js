@@ -322,7 +322,7 @@ class Chat {
                         }
                         for (var i = 0; i < surrogates.length; ++i)
                         {
-                            message.replace(String.fromCharCode(surrogates[i][0]) + String.fromCharCode(surrogates[i][1]), String.fromCharCode(0xE000 + i));
+                            message.replace(String.fromCharCode(surrogates[i][0], surrogates[i][1]), String.fromCharCode(0xE000 + i));
                         }
 
                         var differentEmotes = data.tags.emotes.split('/');
@@ -355,7 +355,7 @@ class Chat {
 
                         for (var i = 0; i < surrogates.lengt; ++i)
                         {
-                            message.replace(String.fromCharCode(0xE000 + i), String.fromCharCode(surrogates[i][0]) + String.fromCharCode(surrogates[i][1]));
+                            message.replace(String.fromCharCode(0xE000 + i), String.fromCharCode(surrogates[i][0], surrogates[i][1]));
                         }
 
                         message = message.replace(/[\uE000-\uF8FF]/g, function (x)
