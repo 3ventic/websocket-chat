@@ -320,6 +320,7 @@ class Chat {
                                 ++i;
                             }
                         }
+                        // Replace surrogates while calculating emotes
                         for (var i = 0; i < surrogates.length; ++i)
                         {
                             message = message.replace(String.fromCharCode(surrogates[i][0], surrogates[i][1]), String.fromCharCode(0xE000 + i));
@@ -353,7 +354,8 @@ class Chat {
                         }
                         normalText.push(message.substring(0, lastStartIndex));
 
-                        for (var i = 0; i < surrogates.lengt; ++i)
+                        // Put surrogate pairs back in
+                        for (var i = 0; i < surrogates.length; ++i)
                         {
                             message = message.replace(String.fromCharCode(0xE000 + i), String.fromCharCode(surrogates[i][0], surrogates[i][1]));
                         }
