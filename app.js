@@ -310,7 +310,20 @@ class Chat {
 
                     if (typeof data.tags.emotes === "string")
                     {
-                        message = message.replace(/[\uD000-\uDFFF]/g, "\uFFFD");
+                        var surrogates = [];
+                        for (var i = 0; i < message.length; ++i)
+                        {
+                            var charcode = message.charCodeAt(i);
+                            if (charcode <= 0xDBFF && charcode >= 0xD800)
+                            {
+                                surrogates.push([charcode, message.charCodeAt(i + 1)]);
+                                ++i;
+                            }
+                        }
+                        for (var i = 0; i < surrogates.length; ++i)
+                        {
+                            message.replace(String.fromCharCode(surrogates[i][0]) + String.fromCharCode(surrogates[i][1]), String.fromCharCode(0xE000 + i));
+                        }
 
                         var differentEmotes = data.tags.emotes.split('/');
                         var replacementData = [];
@@ -340,6 +353,16 @@ class Chat {
                         }
                         normalText.push(message.substring(0, lastStartIndex));
 
+                        for (var i = 0; i < surrogates.lengt; ++i)
+                        {
+                            message.replace(String.fromCharCode(0xE000 + i), String.fromCharCode(surrogates[i][0]) + String.fromCharCode(surrogates[i][1]));
+                        }
+
+                        message = message.replace(/[\uE000-\uF8FF]/g, function (x)
+                        {
+                            return String.fromCharCode(0xD800 + (x.charCodeAt(0) - 0xE000));
+                        });
+
                         for (var i = normalText.length - 1; i >= 0; i--)
                         {
                             if (normalText[i].length > 0)
@@ -360,7 +383,7 @@ class Chat {
                                     // found a highlight
                                     this.chatters[displayName]=Math.max(this.chatters[displayName]||0,this.messageid+200);
                                 }
-                                text = text.replace(/[\uE000-\uF800]/g,function(x){return links[x.charCodeAt(0)];});
+                                text = text.replace(/[\uE000-\uF8FF]/g,function(x){return links[x.charCodeAt(0)];});
                                 message = message.replace(normalText[i], text);
                             }
                         }
