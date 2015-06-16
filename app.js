@@ -173,17 +173,17 @@ class Chat {
             case "USERSTATE":
                 var badges = [];
                 var modFound = false;
-                if (typeof data.tags.emotesets === "string")
+                if (typeof data.tags["emote-sets"] === "string")
                 {
                     if (typeof this.emoticons === "undefined" || this.emoticons.length == 0)
                     {
                         let self = this;
-                        Twitch.api({ method: "chat/emoticon_images", params: { emotesets: data.tags.emotesets } }, function (error, data)
+                        Twitch.api({ method: "chat/emoticon_images", params: { emotesets: data.tags["emote-sets"] } }, function (error, data)
                         {
                             self.onEmotesLoad(error, data);
                         });
                     }
-                    this.emotesets = data.tags.emotesets.split(',');
+                    this.emotesets = data.tags["emote-sets"].split(',');
                     for (var i = 0; i < this.emotesets.length; i++)
                     {
                         this.emotesets[i] = parseInt(this.emotesets[i]);
