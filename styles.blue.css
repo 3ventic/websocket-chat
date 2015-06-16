@@ -12,8 +12,8 @@ html, body
 body {
     font-family: "Trebuchet MS", Helvetica, sans-serif; /* Helvetica, Verdana, Arial, sans-serif; */
     font-size: 14px;
-    background-color: #1B1E2E;
-    color: #A4A8BF;
+    background-color: #1E1E1E;
+    color: #9C9C9C;
 }
 
 #channel-select {
@@ -77,7 +77,9 @@ span.admin {
 
 span.global_mod {
     background: #0c6f20 url(https://chat-badges.s3.amazonaws.com/globalmod.svg);
-    background-size: 100%;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 1px 3px;
 }
 
 span.mod {
@@ -139,7 +141,7 @@ span.modicon {
     position: absolute;
     bottom: 0px;
     background-color: #212537;
-    color: #A4A8BF;
+    color: #ACACAC;
 }
 
 a {
@@ -147,5 +149,5 @@ a {
 }
 
 a:visited {
-    color: #A4A8BF;
+    color: #CCC;
 }
