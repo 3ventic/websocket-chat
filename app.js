@@ -155,8 +155,6 @@ class Chat {
     {
         var data = parseMessage(event.data);
 
-        console.log("WS Message", data);
-
         switch (data.command)
         {
             // TODO: move up to WsOpen when Twitch supports SSL
@@ -230,28 +228,6 @@ class Chat {
             case "NOTICE":
                 {
                     var message = data.params[1];
-                    switch (data.tags['msg-id'])
-                    {
-                        case "subs_on":
-                            $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
-                            break;
-                        case "subs_off":
-                            $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
-                            break;
-                        case "r9k_on":
-                            $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
-                            break;
-                        case "r9k_off":
-                            $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
-                            break;
-                        case "slow_on":
-                            $("#slow").text(message.split(' ')[12]).animate({ "background-color": "#0F0" }, 200);
-                            break;
-                        case "slow_off":
-                            $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
-                            break;
-                    }
-                    
                     this.sendToFeed({ badges: [], user: "", message: message, rawuser: "" });
                 }
                 break;
@@ -469,6 +445,9 @@ class Chat {
                         }
                     }
                 }
+                break;
+            default:
+                console.log("Unknown IRC message", data);
                 break;
         }
     }
