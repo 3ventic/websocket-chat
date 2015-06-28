@@ -19,7 +19,6 @@ class Chat {
             username: "",
             user: ""
         };
-        console.log(this);
 
         var self = this;
 
@@ -56,7 +55,6 @@ class Chat {
         var code = evt.keyCode || evt.which;
         if (code == 13)
         {
-            console.log(this);
             this.loadChat();
         }
     }
@@ -106,8 +104,6 @@ class Chat {
         }
 
         console.log(data);
-
-        console.log(this);
 
         this.localuser.username = data.token.user_name;
 
@@ -215,12 +211,12 @@ class Chat {
                     var red = Math.floor((rgb.r + 30) * 2);
                     var green = Math.floor((rgb.g + 30) * 2);
                     var blue = Math.floor((rgb.b + 30) * 2);
-                    console.log("New", red, green, blue);
+                    //console.log("New", red, green, blue);
                     hex = rgbToHex(
                         Math.min(255, red),
                         Math.min(255, green),
                         Math.min(255, blue));
-                    console.log(hex);
+                    //console.log(hex);
                 }
                 this.localuser.namecolor = hex;
                 this.localuser.user = '<span class="user" style="color:' + hex + '">' + this.localuser.username + '</span>';
@@ -281,12 +277,12 @@ class Chat {
                         var red = Math.floor((rgb.r + 40) * 2);
                         var green = Math.floor((rgb.g + 40) * 2);
                         var blue = Math.floor((rgb.b + 40) * 2);
-                        console.log("New", red, green, blue);
+                        //console.log("New", red, green, blue);
                         hex = rgbToHex(
                             Math.min(255, red),
                             Math.min(255, green),
                             Math.min(255, blue));
-                        console.log(hex);
+                        //console.log(hex);
                     }
                     namecolor = hex;
                     user = '<span class="user" style="color:' + hex + '" data-name="' + user + '">' + user + '</span>';
@@ -427,7 +423,6 @@ class Chat {
                 {
                     if (data.params.length > 1)
                     {
-                        console.log(data.params);
                         $('.line[data-user=' + data.params[1] + ']').css('text-decoration', 'line-through').css('color', '#44485F');
                         $('.line[data-user=' + data.params[1] + '] > span.user').css('color', '#44485F');
                         $('.line[data-user=' + data.params[1] + '] img').css('opacity', '0.7');
