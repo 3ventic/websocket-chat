@@ -79,7 +79,7 @@ class Chat {
         $("#channel-select").hide();
         $("#everything").show();
         this.sendToFeed({ badges: [], message: "Connecting..." });
-        window.history.pushState(null, null, window.location.search);
+        window.history.pushState(null, null, window.location.search.length > 0 ? window.location.search : "?channel=" + this.channel);
 
         var self = this;
 
