@@ -81,6 +81,8 @@ class Chat {
         this.sendToFeed({ badges: [], message: "Connecting..." });
         window.history.pushState(null, null, window.location.search.length > 0 ? window.location.search : "?channel=" + this.channel);
 
+        $("#video").attr("href", "http://www.twitch.tv/" + this.channel + "/popout");
+
         var self = this;
 
         Twitch.api({ method: "" }, function (error, data) { self.onApiLoad(error, data) });
