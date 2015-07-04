@@ -230,18 +230,27 @@ class Chat {
                 }
                 break;
             case "ROOMSTATE":
-                if (data.tags['r9k'] === '1')
-                    $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
-                else
-                    $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
-                if (data.tags['subs-only'] === '1')
-                    $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
-                else
-                    $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
-                if (parseInt(data.tags['slow']) > 0)
-                    $("#slow").text(data.tags['slow']).animate({ "background-color": "#0F0" }, 200);
-                else
-                    $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
+                if ('r9k' in data.tags)
+                {
+                    if (data.tags['r9k'] === '1')
+                        $("#r9k").text("ON").animate({ "background-color": "#0F0" }, 200);
+                    else
+                        $("#r9k").text("OFF").animate({ "background-color": "transparent" }, 200);
+                }
+                if ('subs-only' in data.tags)
+                {
+                    if (data.tags['subs-only'] === '1')
+                        $("#submode").text("ON").animate({ "background-color": "#0F0" }, 200);
+                    else
+                        $("#submode").text("OFF").animate({ "background-color": "transparent" }, 200);
+                }
+                if ('slow' in data.tags)
+                {
+                    if (parseInt(data.tags['slow']) > 0)
+                        $("#slow").text(data.tags['slow']).animate({ "background-color": "#0F0" }, 200);
+                    else
+                        $("#slow").text("0").animate({ "background-color": "transparent" }, 200);
+                }
                 break;
             case "PRIVMSG":
                 {
