@@ -1,6 +1,1 @@
-# websocket-chat
-Websocket chat for Twitch with extra moderation features
-
-# installation
-
-Clone or download it, copy or rename one of the stylesheets to `styles.css` and you're good to go.
+Go check the new rewritten much better version at https://github.com/3ventic/ws-chat
